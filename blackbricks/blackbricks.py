@@ -113,7 +113,7 @@ def _format_sql_cell(cell: str, sql_keyword_case: str = "upper") -> str:
     magics = []
     sql_lines = []
     for line in cell.strip().splitlines():
-        if line.strip().startswith("# MAGIC %sql"):
+        if line.strip().startswith("# MAGIC %sql") or line.strip().startswith("# DBTITLE"):
             continue
         words = line.split()
         magic, sql = words[:2], words[2:]
