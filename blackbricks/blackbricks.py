@@ -110,17 +110,21 @@ def _format_sql_cell(cell: str, sql_keyword_case: str = "upper") -> str:
     if NOFMT in cell.lstrip().splitlines()[0]:
         return cell
 
+    dbtitle = ""
     magics = []
     sql_lines = []
     for line in cell.strip().splitlines():
-        if line.strip().startswith("# MAGIC %sql") or line.strip().startswith("# DBTITLE"):
+        if line.strip().startswith("# MAGIC %sql"):
+            continue
+        elif line.strip().startswith("# DBTITLE"):
+            dbtitle = line.strip() + "\n"
             continue
         words = line.split()
         magic, sql = words[:2], words[2:]
         magics.append(magic)
         sql_lines.append(" ".join(sql).strip())
 
-    return "# MAGIC %sql\n" + "\n".join(
+    return dbtitle + "# MAGIC %sql\n" + "\n".join(
         f"# MAGIC {sql}"
         for sql in sqlparse.format(
             "\n".join(sql_lines), reindent=True, keyword_case=sql_keyword_case
