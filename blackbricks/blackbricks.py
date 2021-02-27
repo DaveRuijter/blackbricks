@@ -127,7 +127,7 @@ def _format_sql_cell(cell: str, sql_keyword_case: str = "upper") -> str:
     return dbtitle + "# MAGIC %sql\n" + "\n".join(
         f"# MAGIC {sql}"
         for sql in sqlparse.format(
-            "\n".join(sql_lines), reindent=True, keyword_case=sql_keyword_case
+            "\n".join(sql_lines), reindent=True, reindent_aligned=True, indent_width=4, keyword_case=sql_keyword_case
         ).splitlines()
     )
 
