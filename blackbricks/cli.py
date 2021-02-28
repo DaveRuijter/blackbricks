@@ -34,6 +34,8 @@ def process_files(
         no_change &= output == content
         n_changed_files += output != content
 
+        typer.secho(f"processing file: {file_.path}", bold=True)
+
         if diff:
             diff_output = unified_diff(
                 content,
