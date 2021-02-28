@@ -109,7 +109,7 @@ def _format_sql_cell(cell: str, sql_keyword_case: str = "upper") -> str:
     """
 
     # Formatting can be disabled on a cell-by-cell basis by addint `-- nofmt` to the first line.
-    if NOFMT in cell.lstrip().splitlines()[0]:
+    if NOFMT in cell.lstrip().splitlines()[0] or NOFMT in cell.lstrip().splitlines()[1]:
         return cell
 
     dbtitle = ""
