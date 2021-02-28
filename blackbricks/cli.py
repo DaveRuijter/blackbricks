@@ -34,7 +34,7 @@ def process_files(
         no_change &= output == content
         n_changed_files += output != content
 
-        typer.secho(f"processing file: {file_.path}", bold=True)
+        typer.secho(f"Pocessing file: {file_.path}..", bold=True)
 
         if diff:
             diff_output = unified_diff(
@@ -55,6 +55,8 @@ def process_files(
                 typer.secho(f"reformatted {file_.path}", bold=True)
         elif check and output != content:
             typer.secho(f"would reformat {file_.path}", bold=True)
+        
+        typer.secho(f"Done processing file: {file_.path}.", bold=True)
 
     unchanged_number = typer.style(
         str(len(files) - n_changed_files), fg=typer.colors.GREEN
