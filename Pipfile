@@ -9,6 +9,7 @@ verify_ssl = true
 black = "==19.10b0"
 sqlparse = "==0.3.1"
 databricks-cli = "*"
+sparksqlformatter = "*"
 typer = {extras = ["all"], version = "*"}
 
 [requires]

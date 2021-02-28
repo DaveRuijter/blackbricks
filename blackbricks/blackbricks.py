@@ -2,7 +2,9 @@ import itertools
 from dataclasses import dataclass
 
 import black
-import sqlparse
+#import sqlparse
+
+from sparksqlformatter import api
 
 _black_default_str = black.Line.__str__
 
@@ -111,7 +113,7 @@ def _format_sql_cell(cell: str, sql_keyword_case: str = "upper") -> str:
         return cell
 
     dbtitle = ""
-    magics = []
+    #magics = []
     sql_lines = []
     for line in cell.strip().splitlines():
         if line.strip().startswith("# MAGIC %sql"):
@@ -120,14 +122,16 @@ def _format_sql_cell(cell: str, sql_keyword_case: str = "upper") -> str:
             dbtitle = line.strip() + "\n"
             continue
         words = line.split()
-        magic, sql = words[:2], words[2:]
-        magics.append(magic)
+        #magic, sql = words[:2], words[2:]
+        sql = words[2:]
+        #magics.append(magic)
         sql_lines.append(" ".join(sql).strip())
 
+    style = {'reservedKeywordUppercase': True, 'inlineMaxLength':140, 'splitOnComma': True}
     return dbtitle + "# MAGIC %sql\n" + "\n".join(
         f"# MAGIC {sql}"
-        for sql in sqlparse.format(
-            "\n".join(sql_lines), reindent=True, reindent_aligned=True, indent_width=4, keyword_case=sql_keyword_case
+        for sql in api.format_query(
+            "\n".join(sql_lines), style #reindent=True, reindent_aligned=True, indent_width=4, keyword_case=sql_keyword_case
         ).splitlines()
     )
 
